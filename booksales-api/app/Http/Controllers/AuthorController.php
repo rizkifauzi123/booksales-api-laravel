@@ -29,9 +29,51 @@ class AuthorController extends Controller
         ]);
 
         // Simpan ke database
-        $author = Author::create($validated);
+        $authors = Author::create($validated);
 
         // Return response JSON
-        return response()->json($author, 201);
-    }
+        return response()->json($authors, 201);
+         }
+
+        //Menampilkan data berdasarkan id 
+        public function show($id): JsonResponse
+        {
+            $authors = Author::find($id);
+            if (!$authors) {
+                return response()->json(['message' => 'Author not found'], 404);
+            }
+            return response()->json($authors);
+        }
+
+        //Mengupdate data
+        public function update(Request $request, $id): JsonResponse
+        {
+            $authors = Author::find($id);
+            if (!$authors) {
+                return response()->json(['message' => 'Author not Found'],404);
+            }
+            
+            $validated = $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|unique:authors,email,' .$id,
+            ]);
+
+            $authors->update($validated);
+            return response()->json($authors);
+
+        }
+
+        //Menghapus data 
+
+        public function destroy($id): JsonResponse
+        {
+            $authors = Author::find($id);
+            if (!$authors) {
+                return response()->json(['message' => 'Author not Found'], 404);
+            }
+
+            $authors->delete();
+            return response()->json(['message' => 'Author deleted']);
+        }
+   
 }
