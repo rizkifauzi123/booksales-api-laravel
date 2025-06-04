@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Author;
 use App\Models\Book;
 use App\Models\Genre;
+use App\Models\Transaction;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -22,6 +23,7 @@ class DatabaseSeeder extends Seeder
         AuthorSeeder::class,
         GenreSeeder::class,
         BookSeeder::class,
+        TransactionSeeder::class,
 
 
      ]);
